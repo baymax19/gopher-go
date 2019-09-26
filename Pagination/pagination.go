@@ -37,9 +37,9 @@ func paginationFunc(w http.ResponseWriter, r *http.Request) {
 	per_page, err := strconv.ParseInt(r.URL.Query().Get("per_page"), 10, 0)
 	perPage := validatePerPage(per_page)
 	page = validatePage(page, perPage, int64(total))
-	
+
 	skipCount := validateSkipCount(page, perPage)
-	
+
 	apiResult := make([]Post, minInt(perPage, total-int64(skipCount)))
 	var response []Post
 	for i := int64(0); i < int64(len(apiResult)); i++ {
@@ -63,7 +63,7 @@ func validatePage(page, perPage, totalCount int64) int64 {
 	if perPage < 1 {
 		return 1
 	}
-	
+
 	pages := ((totalCount - 1) / perPage) + 1
 	if page < 1 {
 		return 1
@@ -82,7 +82,7 @@ func validateSkipCount(page, perPage int64) int64 {
 }
 
 func minInt(a, b int64) int64 {
-	if (a > b) {
+	if a > b {
 		return b
 	}
 	return a
